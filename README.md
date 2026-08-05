@@ -58,9 +58,8 @@ A aplicacao estara disponivel em `http://localhost:8082`.
 
 A documentacao OpenAPI (Swagger UI) esta disponivel em:
 
-```
-http://localhost:8082/swagger-ui.html
-```
+- **Producao:** https://origo-api.onrender.com/swagger-ui.html
+- **Local:** http://localhost:8082/swagger-ui.html
 
 ## Tratamento de erros
 
@@ -81,8 +80,25 @@ A API retorna erros no formato padronizado:
 
 ## Deploy
 
+**API em producao:** https://origo-api.onrender.com
+
 - **Banco de dados:** Neon (PostgreSQL free tier) - auto-suspende e retoma sozinho apos inatividade
-- **Aplicacao:** Render (free tier) - nota sobre cold start de ~30-50s apos inatividade
+- **Aplicacao:** Render (free tier) com Docker - nota sobre cold start de ~30-50s apos inatividade
+
+### Variaveis de ambiente (Render)
+
+| Variavel | Valor |
+|---|---|
+| `DATABASE_URL` | `jdbc:postgresql://<host>/<database>?sslmode=require` |
+| `DATABASE_USERNAME` | `neondb_owner` |
+| `DATABASE_PASSWORD` | *(senha do Neon)* |
+
+### Build com Docker
+
+```bash
+docker build -t origo-api .
+docker run -p 8082:8082 -e DATABASE_URL="..." -e DATABASE_USERNAME="..." -e DATABASE_PASSWORD="..." origo-api
+```
 
 > **Proximo passo:** Em producao real, o ideal seria usar Flyway ou Liquibase para migracoes de banco de dados. Atualmente utiliza-se `ddl-auto: update` para fins de desenvolvimento.
 
