@@ -14,4 +14,4 @@ spring:
         format_sql: true
 
 server:
-  port: 8082
+  port: ${PORT:8082}
