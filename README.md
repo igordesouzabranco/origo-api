@@ -2,11 +2,11 @@
 
 API REST de gerenciamento de produtos, construida com Spring Boot 4.
 
-## Sobre o projeto
+## Sobre o projeto:
 
-A Origo API e o meu primeiro projeto em Java, criado como parte do meu portfolio pessoal com foco em fintech e logistica. O objetivo e construir uma API REST completa com persistencia em PostgreSQL, tratamento de erros limpo e boas praticas de desenvolvimento.
+A Origo API é o meu primeiro projeto em Java, criado como parte do meu portfolio pessoal com foco em fintech e logistica. O objetivo é construir uma API REST completa com persistência em PostgreSQL, tratamento de erros limpo e boas práticas de desenvolvimento.
 
-## Stack tecnica
+## Stack técnica:
 
 - **Linguagem:** Java 21
 - **Framework:** Spring Boot 4.0.7 (Spring Framework 7)
@@ -17,14 +17,14 @@ A Origo API e o meu primeiro projeto em Java, criado como parte do meu portfolio
 
 ## Como rodar localmente
 
-### Pre-requisitos
+### Pré-requisitos:
 
-- Java 21 (JDK)
+- Java 21 (JDK) br
 - Maven (wrapper incluso no projeto)
 
-### Variaveis de ambiente
+### Variáveis de ambiente:
 
-Configure as seguintes variaveis de ambiente antes de rodar a aplicacao:
+Configure as seguintes variáveis de ambiente antes de rodar a aplicação:
 
 ```bash
 export DATABASE_URL="jdbc:postgresql://<host>/<database>?sslmode=require"
@@ -34,17 +34,17 @@ export DATABASE_PASSWORD="<sua-senha>"
 
 > **Importante:** Nunca hardcode credenciais no `application.yaml` ou committe-as no Git.
 
-### Executar
+### Executar:
 
 ```bash
 ./mvnw spring-boot:run
 ```
 
-> **Nota:** Se o build travar em maquinas com pouca RAM, defina `MAVEN_OPTS=-Xmx512m`.
+> **Nota:** Se o build travar em máquinas com pouca RAM, defina `MAVEN_OPTS=-Xmx512m`.
 
-A aplicacao estara disponivel em `http://localhost:8082`.
+A aplicação estará disponivel em `http://localhost:8082`.
 
-## Endpoints da API
+## Endpoints da API:
 
 | Metodo | Rota                 | Descricao                     | Status      |
 |--------|----------------------|-------------------------------|-------------|
@@ -54,11 +54,11 @@ A aplicacao estara disponivel em `http://localhost:8082`.
 | PUT    | /v1/produtos/{id}    | Atualiza um produto           | 200 / 404   |
 | DELETE | /v1/produtos/{id}    | Remove um produto             | 204 / 404   |
 
-## Documentacao interativa
+## Documentação interativa
 
-A documentacao OpenAPI (Swagger UI) esta disponivel em:
+A documentação OpenAPI (Swagger UI) está disponivel em:
 
-- **Producao:** https://origo-api.onrender.com/swagger-ui.html
+- **Produção:** https://origo-api.onrender.com/swagger-ui.html
 - **Local:** http://localhost:8082/swagger-ui.html
 
 ## Tratamento de erros
@@ -85,9 +85,9 @@ A API retorna erros no formato padronizado:
 - **Banco de dados:** Neon (PostgreSQL free tier) - auto-suspende e retoma sozinho apos inatividade
 - **Aplicacao:** Render (free tier) com Docker - nota sobre cold start de ~30-50s apos inatividade
 
-### Variaveis de ambiente (Render)
+### Variáveis de ambiente (Render):
 
-| Variavel | Valor |
+| Variável | Valor |
 |---|---|
 | `DATABASE_URL` | `jdbc:postgresql://<host>/<database>?sslmode=require` |
 | `DATABASE_USERNAME` | `neondb_owner` |
@@ -100,8 +100,8 @@ docker build -t origo-api .
 docker run -p 8082:8082 -e DATABASE_URL="..." -e DATABASE_USERNAME="..." -e DATABASE_PASSWORD="..." origo-api
 ```
 
-> **Proximo passo:** Em producao real, o ideal seria usar Flyway ou Liquibase para migracoes de banco de dados. Atualmente utiliza-se `ddl-auto: update` para fins de desenvolvimento.
+> **Próximo passo:** Em produção real, o ideal seria usar Flyway ou Liquibase para migrações de banco de dados. Atualmente utiliza-se `ddl-auto: update` para fins de desenvolvimento.
 
 ## Roadmap
 
-- Suporte ao metodo HTTP QUERY (RFC 10008) - ainda sem suporte nativo no Spring, implementacao planejada via Servlet Filter manual
+- Suporte ao metodo HTTP QUERY (RFC 10008) - ainda sem suporte nativo no Spring, implementação planejada via Servlet Filter manual
