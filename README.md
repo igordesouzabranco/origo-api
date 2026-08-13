@@ -48,11 +48,11 @@ A aplicação estará disponivel em `http://localhost:8082`.
 
 | Metodo | Rota                 | Descricao                     | Status      |
 |--------|----------------------|-------------------------------|-------------|
-| GET    | /v1/produtos         | Lista todos os produtos       | 200         |
-| GET    | /v1/produtos/{id}    | Busca um produto por id       | 200 / 404   |
-| POST   | /v1/produtos         | Cria um produto               | 201         |
-| PUT    | /v1/produtos/{id}    | Atualiza um produto           | 200 / 404   |
-| DELETE | /v1/produtos/{id}    | Remove um produto             | 204 / 404   |
+| GET    | /produtos         | Lista todos os produtos       | 200         |
+| GET    | /produtos/{id}    | Busca um produto por id       | 200 / 404   |
+| POST   | /produtos         | Cria um produto               | 201         |
+| PUT    | /produtos/{id}    | Atualiza um produto           | 200 / 404   |
+| DELETE | /produtos/{id}    | Remove um produto             | 204 / 404   |
 
 ## Documentação interativa
 
