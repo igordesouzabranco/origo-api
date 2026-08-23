@@ -24,7 +24,27 @@ A Origo API é o meu primeiro projeto em Java, criado como parte do meu portfoli
 
 ### Variáveis de ambiente:
 
-Configure as seguintes variáveis de ambiente antes de rodar a aplicação:
+Configure as seguintes variáveis de ambiente antes de rodar a aplicação.
+
+**Opção 1 — Arquivo `.env` (recomendado para desenvolvimento local):**
+
+Copie o arquivo `.env.example` para `.env` na raiz do projeto e preencha com os valores reais:
+
+```bash
+cp .env.example .env
+```
+
+Conteúdo do `.env`:
+
+```
+DATABASE_URL=jdbc:postgresql://<host>/<database>?sslmode=require
+DATABASE_USERNAME=<seu-usuario>
+DATABASE_PASSWORD=<sua-senha>
+```
+
+Não é preciso exportar nada no terminal — o `springboot4-dotenv` carrega automaticamente.
+
+**Opção 2 — Variáveis de ambiente reais:**
 
 ```bash
 export DATABASE_URL="jdbc:postgresql://<host>/<database>?sslmode=require"
@@ -32,7 +52,7 @@ export DATABASE_USERNAME="<seu-usuario>"
 export DATABASE_PASSWORD="<sua-senha>"
 ```
 
-> **Importante:** Nunca hardcode credenciais no `application.yaml` ou committe-as no Git.
+> **Importante:** Nunca hardcode credenciais no `application.yaml` ou committe-as no Git. O `.env` real já está no `.gitignore`.
 
 ### Executar:
 
@@ -60,6 +80,57 @@ A documentação OpenAPI (Swagger UI) está disponivel em:
 
 - **Produção:** https://origo-api.onrender.com/swagger-ui.html
 - **Local:** http://localhost:8082/swagger-ui.html
+
+## MCP (Model Context Protocol)
+
+A Origo API também expõe as operações de gerenciamento de produtos como ferramentas MCP, permitindo que agentes de IA (Claude Desktop, Claude Code, Cursor, etc.) interajam com o estoque diretamente via linguagem natural.
+
+### Endpoint MCP
+
+- **Local:** `http://localhost:8082/mcp` (transporte Streamable HTTP)
+- **Nome do servidor:** `origo-api-mcp`
+- **Versão:** `0.0.1`
+
+### Ferramentas disponíveis
+
+| Ferramenta          | Descrição                                  | Parâmetros                                  |
+|---------------------|--------------------------------------------|---------------------------------------------|
+| `listarProdutos`    | Lista todos os produtos cadastrados        | (nenhum)                                    |
+| `buscarProduto`     | Busca um produto pelo ID                   | `id` (Long)                                 |
+| `criarProduto`      | Cadastra um novo produto no estoque        | `nome` (String), `preco` (BigDecimal), `quantidade` (Integer) |
+| `atualizarProduto`  | Atualiza os dados de um produto existente  | `id` (Long), `nome`, `preco`, `quantidade`  |
+| `removerProduto`    | Remove um produto do estoque               | `id` (Long)                                 |
+
+### Como testar com o MCP Inspector
+
+Com a aplicação rodando localmente:
+
+```bash
+npx @modelcontextprotocol/inspector http://localhost:8082/mcp
+```
+
+Selecione o transporte **Streamable HTTP** e clique em Connect. As 5 tools devem aparecer listadas com seus schemas.
+
+### Como testar com Claude Desktop / Claude Code
+
+Adicione o servidor MCP na configuração do seu cliente (ex.: arquivo `claude_desktop_config.json` ou `.claude/settings.json`):
+
+```json
+{
+  "mcpServers": {
+    "origo-api": {
+      "transport": "streamable-http",
+      "url": "http://localhost:8082/mcp"
+    }
+  }
+}
+```
+
+Depois basta pedir em linguagem natural, ex.: *"lista os produtos cadastrados"* ou *"cria um produto Notebook a 2499.90 com 10 unidades"*.
+
+### Tratamento de erro via MCP
+
+O `GlobalExceptionHandler` cobre apenas requisições HTTP. Para chamadas MCP, o Spring AI converte exceções como `NotFoundException` diretamente em resultados de erro da tool, usando a mensagem da exceção (ex.: "Produto não encontrado").
 
 ## Tratamento de erros
 

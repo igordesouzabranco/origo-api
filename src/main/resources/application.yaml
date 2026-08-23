@@ -12,6 +12,16 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  ai:
+    mcp:
+      server:
+        enabled: true
+        name: origo-api-mcp
+        version: 0.0.1
+        protocol: STREAMABLE
+        type: SYNC
+        streamable-http:
+          mcp-endpoint: /mcp
 
 server:
   port: ${PORT:8082}
