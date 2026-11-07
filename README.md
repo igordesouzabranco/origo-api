@@ -1,12 +1,8 @@
 
 <div align="center">
-
-# Origo API
-
+  
 ![Logo do Projeto](.github/images/Origo.png)
 
-
-## ORIGO API
 
 
 **API REST de gestão de produtos, com servidor MCP para agentes de IA**
